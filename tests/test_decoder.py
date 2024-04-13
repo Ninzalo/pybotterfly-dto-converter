@@ -51,17 +51,34 @@ class DecoderTest(IsolatedAsyncioTestCase):
         )
         self.assertEqual(second_decoded_dto, other_test_dto)
 
-    async def test_value_error_failure(self):
-        test_cases = [
-            1,
-            "",
-            "a",
-            {},
-            {"a": 1},
-            {"a": "a"},
-            [],
-            [1, 2],
-        ]
-        with self.assertRaises(ValueError):
-            for case in test_cases:
-                await DTOConverter.decode_bytes_to_dto(case)
+    async def test_arg_empty(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto()
+
+    async def test_arg_none(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto(None)
+
+    async def test_arg_int(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto(1)
+
+    async def test_arg_bool(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto(True)
+
+    async def test_arg_str(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto("")
+
+    async def test_arg_list(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto([1, 2])
+
+    async def test_arg_dict(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto({"a", 1})
+
+    async def test_arg_tuple(self):
+        with self.assertRaises(TypeError):
+            await DTOConverter.decode_bytes_to_dto((1, 2))

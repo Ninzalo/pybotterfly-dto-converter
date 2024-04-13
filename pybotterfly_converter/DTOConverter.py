@@ -4,18 +4,18 @@ import json
 import pickle
 import sys
 
-from .BaseDTOConverter import BaseDTOConverter
+from .BaseDTOConverter import BaseDTOConverter, IsDataclass
 
 
 class DTOConverter(BaseDTOConverter):
     """Converter for Data Transfer Objects."""
 
     @classmethod
-    async def encode_dto_to_bytes(cls, dto) -> bytes:
+    async def encode_dto_to_bytes(cls, dto: IsDataclass) -> bytes:
         return await cls._str_to_bytes(await cls._dataclass_to_str(dto))
 
     @classmethod
-    async def decode_bytes_to_dto(cls, data: bytes):
+    async def decode_bytes_to_dto(cls, data: bytes) -> IsDataclass:
         return await cls._str_to_dataclass(await cls._bytes_to_str(data))
 
     @classmethod
@@ -45,11 +45,12 @@ class DTOConverter(BaseDTOConverter):
         return pickle.loads(dto_bytes)
 
     @classmethod
-    async def _dataclass_to_str(cls, dto: type) -> str:
+    async def _dataclass_to_str(cls, dto: IsDataclass) -> str:
         """
         Convert a DTO to a string.
 
         :param dto: The DTO to convert.
+        :type: IsDataclass
 
         :return: The DTO as a string.
         :rtype: str
@@ -57,7 +58,7 @@ class DTOConverter(BaseDTOConverter):
         return json.dumps(dto, default=cls._dataclass_object_dump)
 
     @classmethod
-    async def _str_to_dataclass(cls, dto_string: str) -> type:
+    async def _str_to_dataclass(cls, dto_string: str) -> IsDataclass:
         """
         Convert a DTO string to a dataclass.
 
@@ -65,12 +66,12 @@ class DTOConverter(BaseDTOConverter):
         :type dto_string: str
 
         :return: The dataclass you've encoded
-        :rtype: type
+        :rtype: IsDataclass
         """
         return json.loads(dto_string, object_hook=cls._dataclass_object_load)
 
     @classmethod
-    def _dataclass_object_dump(cls, dto: type) -> dict:
+    def _dataclass_object_dump(cls, dto: IsDataclass) -> dict:
         datacls = type(dto)
         if not dataclasses.is_dataclass(datacls):
             raise TypeError(f"Expected dataclass instance, got '{datacls!r}' object")
@@ -82,7 +83,7 @@ class DTOConverter(BaseDTOConverter):
         return {**{f: getattr(dto, f) for f in fields}, "__dataclass__": ref}
 
     @classmethod
-    def _dataclass_object_load(cls, dictionary: dict) -> type | dict:
+    def _dataclass_object_load(cls, dictionary: dict) -> IsDataclass | dict:
         ref = dictionary.pop("__dataclass__", None)
         if ref is None:
             return dictionary

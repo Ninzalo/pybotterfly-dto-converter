@@ -1,2 +1,2 @@
-from .BaseConverter import BaseConverter
+from .BaseDTOConverter import BaseDTOConverter
 from .DTOConverter import DTOConverter

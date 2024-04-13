@@ -4,10 +4,10 @@ import json
 import pickle
 import sys
 
-from .BaseConverter import BaseConverter
+from .BaseDTOConverter import BaseDTOConverter
 
 
-class DTOConverter(BaseConverter):
+class DTOConverter(BaseDTOConverter):
     """Converter for Data Transfer Objects."""
 
     @classmethod
@@ -15,7 +15,7 @@ class DTOConverter(BaseConverter):
         return await cls._str_to_bytes(await cls._dataclass_to_str(dto))
 
     @classmethod
-    async def decode_bytes_to_dto(cls, data: bytes) -> type:
+    async def decode_bytes_to_dto(cls, data: bytes):
         return await cls._str_to_dataclass(await cls._bytes_to_str(data))
 
     @classmethod

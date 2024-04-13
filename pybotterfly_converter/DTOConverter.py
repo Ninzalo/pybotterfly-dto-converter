@@ -55,6 +55,8 @@ class DTOConverter(BaseDTOConverter):
         :return: The DTO as a string.
         :rtype: str
         """
+        if not dataclasses.is_dataclass(dto):
+            raise TypeError(f"Expected dataclass instance, got '{type(dto)}' object")
         return json.dumps(dto, default=cls._dataclass_object_dump)
 
     @classmethod

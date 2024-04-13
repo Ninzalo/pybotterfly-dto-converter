@@ -57,5 +57,5 @@ class EncoderTest(IsolatedAsyncioTestCase):
             await DTOConverter.encode_dto_to_bytes({"a", 1})
 
     async def test_arg_tuple(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             await DTOConverter.encode_dto_to_bytes((1, 2))

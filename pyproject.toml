@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pybotterfly-dto-converter"
-version = "0.0.1"
+version = "0.1.0"
 description = "DTO converter for PyBotterfly framework"
 authors = ["Ninzalo <k-artemiy@mail.ru>"]
 license = "MIT"

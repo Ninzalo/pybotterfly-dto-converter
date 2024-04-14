@@ -19,6 +19,13 @@ second_encoded_dto = DTOConverter.encode(second_test_dto)
 
 
 class DecoderTest(TestCase):
+    def test_success(self):
+        first_decoded_dto = DTOConverter.decode(first_encoded_dto)
+        self.assertEqual(first_decoded_dto, first_test_dto)
+
+        second_decoded_dto = DTOConverter.decode(second_encoded_dto)
+        self.assertEqual(second_decoded_dto, second_test_dto)
+
     def test_not_equal_decode(self):
         first_decoded_dto = DTOConverter.decode(first_encoded_dto)
         self.assertNotEqual(second_test_dto, first_decoded_dto)
@@ -31,13 +38,6 @@ class DecoderTest(TestCase):
         first_decoded_dto = DTOConverter.decode(first_encoded_dto)
         second_decoded_dto = DTOConverter.decode(second_encoded_dto)
         self.assertNotEqual(first_decoded_dto, second_decoded_dto)
-
-    def test_success(self):
-        first_decoded_dto = DTOConverter.decode(first_encoded_dto)
-        self.assertEqual(first_decoded_dto, first_test_dto)
-
-        second_decoded_dto = DTOConverter.decode(second_encoded_dto)
-        self.assertEqual(second_decoded_dto, second_test_dto)
 
     def test_arg_empty(self):
         with self.assertRaises(TypeError):

@@ -1,3 +1,4 @@
+import base64
 import dataclasses
 import importlib
 import json
@@ -11,12 +12,21 @@ class DTODecoder(BaseDTODecoder):
     """Decoder for Data Transfer Objects."""
 
     @classmethod
+    def validate_input(cls, dto_bytes: bytes) -> None:
+        if not isinstance(dto_bytes, bytes):
+            raise TypeError("Input must be bytes")
+
+    @classmethod
     def bytes_to_str(cls, dto_bytes: bytes) -> str:
         return pickle.loads(dto_bytes)
 
     @classmethod
     def str_to_dataclass(cls, dto_string: str) -> BaseDTO:
         return json.loads(dto_string, object_hook=cls._dataclass_object_load)
+
+    @classmethod
+    def decode_dto_string(cls, dto_string: str) -> str:
+        return base64.b64decode(dto_string.encode()).decode()
 
     @classmethod
     def _dataclass_object_load(cls, dictionary: dict) -> BaseDTO | dict:

@@ -1,3 +1,4 @@
+import base64
 import dataclasses
 import json
 import pickle
@@ -11,6 +12,11 @@ class DTOEncoder(BaseDTOEncoder):
     """Encoder for Data Transfer Objects."""
 
     @classmethod
+    def validate_input(cls, dto: BaseDTO) -> None:
+        if not dataclasses.is_dataclass(dto):
+            raise TypeError(f"Expected dataclass instance, got '{dto!r}' object")
+
+    @classmethod
     def dataclass_to_str(cls, dto: BaseDTO) -> str:
         if not dataclasses.is_dataclass(dto):
             raise TypeError(f"Expected dataclass instance, got '{type(dto)}' object")
@@ -21,10 +27,12 @@ class DTOEncoder(BaseDTOEncoder):
         return pickle.dumps(dto_string)
 
     @classmethod
+    def encode_dto_string(cls, dto_string: str) -> str:
+        return base64.b64encode(dto_string.encode()).decode()
+
+    @classmethod
     def _dataclass_object_dump(cls, dto: BaseDTO) -> dict:
         datacls = type(dto)
-        if not dataclasses.is_dataclass(datacls):
-            raise TypeError(f"Expected dataclass instance, got '{datacls!r}' object")
         mod = sys.modules.get(datacls.__module__)
         if mod is None or not hasattr(mod, datacls.__qualname__):
             raise ValueError(f"Can't resolve '{datacls!r}' reference")

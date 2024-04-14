@@ -9,12 +9,16 @@ class DTOConverter(BaseDTOConverter):
 
     @classmethod
     def encode(cls, dto: BaseDTO) -> bytes:
+        DTOEncoder.validate_input(dto=dto)
         dto_string = DTOEncoder.dataclass_to_str(dto)
-        dto_bytes = DTOEncoder.str_to_bytes(dto_string)
+        encoded_dto_string = DTOEncoder.encode_dto_string(dto_string)
+        dto_bytes = DTOEncoder.str_to_bytes(encoded_dto_string)
         return dto_bytes
 
     @classmethod
     def decode(cls, dto_bytes: bytes) -> BaseDTO:
+        DTODecoder.validate_input(dto_bytes=dto_bytes)
         dto_string = DTODecoder.bytes_to_str(dto_bytes)
-        dto = DTODecoder.str_to_dataclass(dto_string)
+        decoded_dto_string = DTODecoder.decode_dto_string(dto_string)
+        dto = DTODecoder.str_to_dataclass(decoded_dto_string)
         return dto

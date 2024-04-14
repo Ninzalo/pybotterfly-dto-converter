@@ -7,8 +7,18 @@ venv/
 .env
 .git
 
-.idea/
-*/.idea/
-
 *.egg-info/
 *.egg
+
+dist
+dist-ssr
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+
+# Logs
+logs
+*.log

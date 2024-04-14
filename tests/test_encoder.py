@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from unittest import IsolatedAsyncioTestCase
 
-from pybotterfly_converter import DTOConverter
+from pybotterfly_dto_converter import DTOConverter
 
 
 @dataclass

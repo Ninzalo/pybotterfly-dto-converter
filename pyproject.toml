@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "pybotterfly-converter"
+name = "pybotterfly-dto-converter"
 version = "0.0.1"
 description = "DTO converter for PyBotterfly framework"
 authors = ["Ninzalo <k-artemiy@mail.ru>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "pybotterfly_converter"}]
+packages = [{include = "pybotterfly_dto_converter"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"

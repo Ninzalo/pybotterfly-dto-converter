@@ -11,11 +11,11 @@ class DTOConverter(BaseDTOConverter):
     """Converter for Data Transfer Objects."""
 
     @classmethod
-    async def encode_dto_to_bytes(cls, dto: IsDataclass) -> bytes:
+    async def encode(cls, dto: IsDataclass) -> bytes:
         return await cls._str_to_bytes(await cls._dataclass_to_str(dto))
 
     @classmethod
-    async def decode_bytes_to_dto(cls, data: bytes) -> IsDataclass:
+    async def decode(cls, data: bytes) -> IsDataclass:
         return await cls._str_to_dataclass(await cls._bytes_to_str(data))
 
     @classmethod

@@ -13,7 +13,7 @@ class BaseDTOConverter(ABC):
 
     @classmethod
     @abstractmethod
-    async def encode_dto_to_bytes(cls, dto: IsDataclass) -> bytes:
+    async def encode(cls, dto: IsDataclass) -> bytes:
         """Encode DTO to bytes
 
         :param dto: The DTO to convert.
@@ -25,7 +25,7 @@ class BaseDTOConverter(ABC):
 
     @classmethod
     @abstractmethod
-    async def decode_bytes_to_dto(cls, data: bytes) -> IsDataclass:
+    async def decode(cls, data: bytes) -> IsDataclass:
         """Decode bytes to DTO
 
         :param data: The bytes to convert to DTO.

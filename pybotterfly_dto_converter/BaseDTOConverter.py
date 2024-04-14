@@ -1,11 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Any, ClassVar, Dict, Protocol
 
-
-class IsDataclass(Protocol):
-    """Type checker for dataclass"""
-
-    __dataclass_fields__: ClassVar[Dict[str, Any]]
+from .BaseDTO import BaseDTO
 
 
 class BaseDTOConverter(ABC):
@@ -13,11 +8,11 @@ class BaseDTOConverter(ABC):
 
     @classmethod
     @abstractmethod
-    async def encode(cls, dto: IsDataclass) -> bytes:
+    async def encode(cls, dto: BaseDTO) -> bytes:
         """Encode DTO to bytes
 
         :param dto: The DTO to convert.
-        :type dto: IsDataclass
+        :type dto: BaseDTO
 
         :return: bytes
         :rtype: bytes
@@ -25,12 +20,12 @@ class BaseDTOConverter(ABC):
 
     @classmethod
     @abstractmethod
-    async def decode(cls, data: bytes) -> IsDataclass:
+    async def decode(cls, dto_bytes: bytes) -> BaseDTO:
         """Decode bytes to DTO
 
         :param data: The bytes to convert to DTO.
         :type data: bytes
 
         :return: The DTO
-        :rtype: IsDataclass
+        :rtype: BaseDTO
         """

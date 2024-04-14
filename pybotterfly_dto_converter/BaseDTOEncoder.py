@@ -18,7 +18,7 @@ class BaseDTOEncoder(ABC):
 
     @classmethod
     @abstractmethod
-    async def dataclass_to_str(cls, dto: BaseDTO) -> str:
+    def dataclass_to_str(cls, dto: BaseDTO) -> str:
         """
         Convert a DTO to a string.
 
@@ -31,7 +31,7 @@ class BaseDTOEncoder(ABC):
 
     @classmethod
     @abstractmethod
-    async def str_to_bytes(cls, dto_string: str) -> bytes:
+    def str_to_bytes(cls, dto_string: str) -> bytes:
         """
         Convert a DTO string to a bytes.
 

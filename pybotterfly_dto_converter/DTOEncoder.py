@@ -11,13 +11,13 @@ class DTOEncoder(BaseDTOEncoder):
     """Encoder for Data Transfer Objects."""
 
     @classmethod
-    async def dataclass_to_str(cls, dto: BaseDTO) -> str:
+    def dataclass_to_str(cls, dto: BaseDTO) -> str:
         if not dataclasses.is_dataclass(dto):
             raise TypeError(f"Expected dataclass instance, got '{type(dto)}' object")
         return json.dumps(dto, default=cls._dataclass_object_dump)
 
     @classmethod
-    async def str_to_bytes(cls, dto_string: str) -> bytes:
+    def str_to_bytes(cls, dto_string: str) -> bytes:
         return pickle.dumps(dto_string)
 
     @classmethod

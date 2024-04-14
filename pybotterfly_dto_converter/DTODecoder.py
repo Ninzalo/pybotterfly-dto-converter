@@ -11,11 +11,11 @@ class DTODecoder(BaseDTODecoder):
     """Decoder for Data Transfer Objects."""
 
     @classmethod
-    async def bytes_to_str(cls, dto_bytes: bytes) -> str:
+    def bytes_to_str(cls, dto_bytes: bytes) -> str:
         return pickle.loads(dto_bytes)
 
     @classmethod
-    async def str_to_dataclass(cls, dto_string: str) -> BaseDTO:
+    def str_to_dataclass(cls, dto_string: str) -> BaseDTO:
         return json.loads(dto_string, object_hook=cls._dataclass_object_load)
 
     @classmethod

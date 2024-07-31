@@ -14,12 +14,14 @@ class DTOEncoder(BaseDTOEncoder):
     @classmethod
     def validate_input(cls, dto: BaseDTO) -> None:
         if not dataclasses.is_dataclass(dto):
-            raise TypeError(f"Expected dataclass instance, got '{dto!r}' object")
+            msg = f"Expected dataclass instance, got '{dto!r}' object"
+            raise TypeError(msg)
 
     @classmethod
     def dataclass_to_str(cls, dto: BaseDTO) -> str:
         if not dataclasses.is_dataclass(dto):
-            raise TypeError(f"Expected dataclass instance, got '{type(dto)}' object")
+            msg = f"Expected dataclass instance, got '{type(dto)}' object"
+            raise TypeError(msg)
         return json.dumps(dto, default=cls._dataclass_object_dump)
 
     @classmethod
@@ -35,7 +37,8 @@ class DTOEncoder(BaseDTOEncoder):
         datacls = type(dto)
         mod = sys.modules.get(datacls.__module__)
         if mod is None or not hasattr(mod, datacls.__qualname__):
-            raise ValueError(f"Can't resolve '{datacls!r}' reference")
+            msg = f"Can't resolve '{datacls!r}' reference"
+            raise ValueError(msg)
         ref = f"{datacls.__module__}.{datacls.__qualname__}"
         fields = (f.name for f in dataclasses.fields(dto))
         return {**{f: getattr(dto, f) for f in fields}, "__dataclass__": ref}

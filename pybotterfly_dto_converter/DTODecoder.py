@@ -14,7 +14,8 @@ class DTODecoder(BaseDTODecoder):
     @classmethod
     def validate_input(cls, dto_bytes: bytes) -> None:
         if not isinstance(dto_bytes, bytes):
-            raise TypeError("Input must be bytes")
+            msg = "Input must be bytes"
+            raise TypeError(msg)
 
     @classmethod
     def bytes_to_str(cls, dto_bytes: bytes) -> str:
@@ -37,8 +38,12 @@ class DTODecoder(BaseDTODecoder):
             modname, _, qualname = ref.rpartition(".")
             module = importlib.import_module(modname)
             datacls = getattr(module, qualname)
-            if not dataclasses.is_dataclass(datacls) or not isinstance(datacls, type):
+            if not dataclasses.is_dataclass(datacls) or not isinstance(
+                datacls,
+                type,
+            ):
                 raise ValueError
             return datacls(**dictionary)
         except (ModuleNotFoundError, ValueError, AttributeError, TypeError):
-            raise ValueError(f"Invalid dataclass reference {ref!r}") from None
+            value_error_str = f"Invalid dataclass reference {ref!r}"
+            raise ValueError(value_error_str) from None

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pybotterfly-dto-converter"
-version = "0.1.0"
+version = "0.1.1"
 description = "DTO converter for PyBotterfly framework"
 authors = ["Ninzalo <k-artemiy@mail.ru>"]
 license = "MIT"
@@ -10,6 +10,8 @@ packages = [{include = "pybotterfly_dto_converter"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.8.0"
 
 [build-system]
 requires = ["poetry-core"]
